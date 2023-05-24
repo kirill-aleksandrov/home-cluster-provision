@@ -1,0 +1,34 @@
+- name: Add kubernetes repo GPT key
+  ansible.builtin.get_url:
+    url: https://dl.k8s.io/apt/doc/apt-key.gpg
+    dest: /etc/apt/keyrings/kubernetes-archive-keyring.gpg
+  tags:
+    - kubernetes-repo
+
+- name: Add kubernetes repo
+  ansible.builtin.apt_repository:
+    repo: deb [signed-by=/etc/apt/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main
+    state: present
+    filename: kubernetes
+  tags:
+    - kubernetes-repo
+
+- name: Install required packages
+  ansible.builtin.apt:
+    pkg:
+      - kubeadm={{ kubernetes.version }}
+      - kubectl={{ kubernetes.version }}
+      - kubelet={{ kubernetes.version }}
+  tags:
+    - kubernetes-install-packages
+
+- name: Hold packages
+  ansible.builtin.dpkg_selections:
+    name: '{{ item }}'
+    selection: hold
+  with_items:
+    - kubeadm
+    - kubectl
+    - kubelet
+  tags:
+    - kubernetes-install-packages

@@ -1,0 +1,6 @@
+- name: Install container runtime
+  ansible.builtin.apt:
+    pkg:
+      - runc
+      - containerd
+      - containernetworking-plugins

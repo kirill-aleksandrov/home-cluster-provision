@@ -1,0 +1,23 @@
+- name: Prepare system
+  become: true
+  hosts: all
+  roles:
+    - prepare_system
+  tags:
+    - prepare_system
+
+- name: Install CRI
+  become: true
+  hosts: all
+  roles:
+    - install_cri
+  tags:
+    - install_cri
+
+- name: install_k8s_packages
+  become: true
+  hosts: all
+  roles:
+    - install_k8s_packages
+  tags:
+    - install_k8s_packages
