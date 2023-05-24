@@ -1,2 +1,5 @@
 kubernetes:
   version: 1.27.2-00
+
+containerd:
+  sandbox_image: registry.k8s.io/pause:3.9

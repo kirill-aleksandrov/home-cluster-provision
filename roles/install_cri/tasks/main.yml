@@ -4,3 +4,27 @@
       - runc
       - containerd
       - containernetworking-plugins
+  tags:
+    - containerd-install-packages
+
+- name: Create containerd config directory
+  ansible.builtin.file:
+    path: /etc/containerd
+    state: directory
+  tags:
+    - containerd-config
+
+- name: Add containerd config
+  ansible.builtin.template:
+    src: config.toml.j2
+    dest: /etc/containerd/config.toml
+    mode: 0644
+  tags:
+    - containerd-config
+
+- name: Restart containerd service
+  ansible.builtin.service:
+    name: containerd
+    state: restarted
+  tags:
+    - containerd-config
