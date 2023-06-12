@@ -1,0 +1,16 @@
+- name: Render kube-vip manifest
+  ansible.builtin.template:
+    src: kube-vip.yaml.j2
+    dest: /etc/kubernetes/manifests/kube-vip.yaml
+    mode: 0644
+  tags:
+    - render_kube_vip_manifest
+
+- name: Init cluster
+  ansible.builtin.shell: |
+    kubeadm init \
+      --control-plane-endpoint {{ kubernetes.control_plane_endpoint }} \
+      --pod-network-cidr {{ kubernetes.pod_cidr }} \
+      --service-cidr {{ kubernetes.service_cidr }}
+  tags:
+    - kubeadm_init

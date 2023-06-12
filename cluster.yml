@@ -14,10 +14,20 @@
   tags:
     - install_cri
 
-- name: install_k8s_packages
+- name: Install Kubernetes packages
   become: true
   hosts: all
   roles:
     - install_k8s_packages
   tags:
     - install_k8s_packages
+
+- name: Init cluster
+  become: true
+  hosts: controller[0]
+  roles:
+    - init_cluster
+  tags:
+    - init_cluster
+
+# - name: Join nodes

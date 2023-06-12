@@ -11,6 +11,7 @@
   ansible.builtin.file:
     path: /etc/containerd
     state: directory
+    mode: '0755'
   tags:
     - containerd-config
 
@@ -18,7 +19,7 @@
   ansible.builtin.template:
     src: config.toml.j2
     dest: /etc/containerd/config.toml
-    mode: 0644
+    mode: '0644'
   tags:
     - containerd-config
 

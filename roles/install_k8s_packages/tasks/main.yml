@@ -2,7 +2,7 @@
   ansible.builtin.get_url:
     url: https://dl.k8s.io/apt/doc/apt-key.gpg
     dest: /etc/apt/keyrings/kubernetes-archive-keyring.gpg
-    mode: 0644
+    mode: '0644'
   tags:
     - kubernetes-repo
 

@@ -1,17 +1,19 @@
 - name: Disable swap
-  command: swapoff -a
+  ansible.builtin.command:
+    cmd: swapoff -a
 
 - name: Disable swap automount
   ansible.builtin.replace:
     path: /etc/fstab
     regexp: '^([^#].*?\sswap\s+sw\s+.*)$'
     replace: '# \1'
-    backup: yes
+    backup: true
 
 - name: Make required kernel modules loadable at boot time
   ansible.builtin.copy:
     src: k8s.modules-load.conf
     dest: /etc/modules-load.d/k8s.conf
+    mode: '0644'
 
 - name: Load required kernel modules
   community.general.modprobe:
@@ -25,6 +27,8 @@
   ansible.builtin.copy:
     src: k8s.sysctl.conf
     dest: /etc/sysctl.d/k8s.conf
+    mode: '0644'
 
 - name: Apply required kernel params
-  shell: sysctl --system
+  ansible.builtin.command:
+    cmd: sysctl --system
