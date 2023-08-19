@@ -1,0 +1,11 @@
+- name: Create kubeadm token
+  ansible.builtin.shell: |
+    kubeadm create token
+  register: kubeadm_token
+
+- name: Get CA cart sha256
+  ansible.builtin.shell: |
+    openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt \
+    | openssl rsa -pubin -outform der 2>/dev/null \
+    | openssl dgst -sha256 -hex | sed 's/^.* //'
+  register: ca_cert_sha256

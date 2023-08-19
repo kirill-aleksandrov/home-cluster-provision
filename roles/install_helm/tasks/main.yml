@@ -1,0 +1,21 @@
+- name: Add kubernetes repo GPT key
+  ansible.builtin.get_url:
+    url: https://baltocdn.com/helm/signing.asc
+    dest: /etc/apt/keyrings/helm-keyring.asc
+    mode: '0644'
+  tags:
+    - helm-repo
+
+- name: Add kubernetes repo
+  ansible.builtin.apt_repository:
+    repo: deb [signed-by=/etc/apt/keyrings/helm-keyring.asc] https://baltocdn.com/helm/stable/debian/ all main
+    state: present
+    filename: kubernetes
+  tags:
+    - helm-repo
+
+- name: Install required packages
+  ansible.builtin.apt:
+    pkg: helm
+  tags:
+    - helm-install-package

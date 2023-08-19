@@ -22,6 +22,14 @@
   tags:
     - install_k8s_packages
 
+- name: Install Helm
+  become: true
+  hosts: controller
+  roles:
+    - install_helm
+  tags:
+    - install_helm
+
 - name: Init cluster
   become: true
   hosts: controller[0]
@@ -29,5 +37,21 @@
     - init_cluster
   tags:
     - init_cluster
+
+- name: Install Calico CNI
+  become: true
+  hosts: controller[0]
+  roles:
+    - install_calico
+  tags:
+    - install_calico
+
+- name: Acquire join credentials
+  become: true
+  hosts: controller[0]
+  roles:
+    - acquire_join_credentials
+  tags:
+    - acquire_join_credentials
 
 # - name: Join nodes
