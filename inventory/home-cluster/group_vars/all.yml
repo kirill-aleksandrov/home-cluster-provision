@@ -9,3 +9,6 @@ kube_vip:
 
 containerd:
   sandbox_image: registry.k8s.io/pause:3.9
+
+calico:
+  version: 3.26.1
