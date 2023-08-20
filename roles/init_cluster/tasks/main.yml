@@ -1,6 +1,6 @@
 - name: Render kube-vip manifest
   ansible.builtin.template:
-    src: kube-vip.yaml.j2
+    src: ../../shared/templates/kube-vip.yaml.j2
     dest: /etc/kubernetes/manifests/kube-vip.yaml
     mode: 0644
   tags:

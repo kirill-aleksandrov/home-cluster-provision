@@ -54,4 +54,10 @@
   tags:
     - acquire_join_credentials
 
-# - name: Join nodes
+- name: Join nodes
+  become: true
+  hosts: all:!controller[0]
+  roles:
+    - join_nodes
+  tags:
+    - join_nodes
